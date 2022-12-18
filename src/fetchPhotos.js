@@ -16,15 +16,12 @@ export async function fetchPhotos(query) {
     },
   };
 
-  await axios
-    .get(`${URL}`, queryParams)
-    .then(res => {
-      if (!res.data.total) {
-        Notify.warning(
-          'Sorry, there are no images matching your search query. Please try again.'
-        );
-      }
-      return res.data;
-    })
-    .then(r => console.log(r));
+  await axios.get(`${URL}`, queryParams).then(res => {
+    if (!res.data.total) {
+      Notify.warning(
+        'Sorry, there are no images matching your search query. Please try again.'
+      );
+    }
+    return res.data;
+  });
 }
