@@ -10,18 +10,20 @@ const refs = {
   gallery: document.querySelector('.gallery'),
 };
 
-refs.searchForm.addEventListener('submit', onSubmit);
+const lightbox = new SimpleLightbox('.photo-link', {
+  // captionsData: 'alt',
+  captionDelay: 250,
+});
 
-const lightbox = new SimpleLightbox('.gallery a');
+refs.searchForm.addEventListener('submit', onSubmit);
 
 function onSubmit(e) {
   e.preventDefault();
 
-  refs.input.blur();
-
   const inputValue = refs.input.value.trim();
 
   refs.input.value = inputValue;
+  refs.input.blur();
 
   if (!inputValue) {
     return;
@@ -31,12 +33,12 @@ function onSubmit(e) {
     .then(picArray => {
       refs.gallery.innerHTML = '';
 
-      renderMarkup(picArray);
+      renderGalleryMarkup(picArray);
     })
     .catch(error => error.message);
 }
 
-function renderMarkup(pictures) {
+function renderGalleryMarkup(pictures) {
   pictures.map(picture => {
     const {
       webformatURL,
@@ -49,7 +51,7 @@ function renderMarkup(pictures) {
     } = picture;
 
     const markup = `<div class="photo-card">
-    <a href="${largeImageURL}">
+    <a class="photo-link" href="${largeImageURL}">
       <img src="${webformatURL}" alt="${tags}" loading="lazy" />
     </a>
     <div class="info">
@@ -72,29 +74,8 @@ function renderMarkup(pictures) {
     </div>
   </div>`;
 
-    console.log(markup);
-
     refs.gallery.insertAdjacentHTML('beforeend', markup);
-    // return markup;
   });
+
+  lightbox.refresh();
 }
-// РОЗМІТКА ДЛЯ КАРТОК
-//  ===================================
-// <div class="photo-card">
-//   <img src="" alt="" loading="lazy" />
-//   <div class="info">
-//     <p class="info-item">
-//       <b>Likes</b>
-//     </p>
-//     <p class="info-item">
-//       <b>Views</b>
-//     </p>
-//     <p class="info-item">
-//       <b>Comments</b>
-//     </p>
-//     <p class="info-item">
-//       <b>Downloads</b>
-//     </p>
-//   </div>
-// </div>;
-// =================================

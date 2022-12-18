@@ -19,7 +19,7 @@ export async function fetchPhotos(query) {
   const res = await axios.get(`${URL}`, queryParams);
 
   if (!res.data.total) {
-    Notify.warning(
+    Notify.failure(
       'Sorry, there are no images matching your search query. Please try again.'
     );
   }
