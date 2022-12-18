@@ -1,7 +1,49 @@
+import { Notify } from 'notiflix';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import { fetchPhotos } from './fetchPhotos.js';
 
+const refs = {
+  searchForm: document.getElementById('search-form'),
+  input: document.querySelector('.search-form__input'),
+  submitBtn: document.querySelector('.search-form__submit-button'),
+  gallery: document.querySelector('.gallery'),
+};
+
+refs.searchForm.addEventListener('submit', onSubmit);
+
+function onSubmit(e) {
+  e.preventDefault();
+
+  let inputValue = refs.input.value.trim();
+
+  if (!inputValue) {
+    return;
+  }
+
+  fetchPhotos(inputValue)
+    .then(data => {
+      console.log(data);
+    })
+    .catch(error => error.message);
+}
+
+// webformatURL - посилання на маленьке зображення для списку карток.
+// largeImageURL - посилання на велике зображення.
+// tags - рядок з описом зображення. Підійде для атрибуту alt.
+// likes - кількість лайків.
+// views - кількість переглядів.
+// comments - кількість коментарів.
+// downloads - кількість завантажень.
+
+function renderMarkup(res) {
+  // if ((res.total = 0)) {
+  //   Notify.warning(
+  //     'Sorry, there are no images matching your search query. Please try again.'
+  //   );
+  // }
+  // console.log(res.total);
+}
 // РОЗМІТКА ДЛЯ КАРТОК
 //  ===================================
 // <div class="photo-card">
@@ -22,29 +64,3 @@ import { fetchPhotos } from './fetchPhotos.js';
 //   </div>
 // </div>;
 // =================================
-
-const refs = {
-  searchForm: document.getElementById('search-form'),
-  input: document.querySelector('.search-form__input'),
-  submitBtn: document.querySelector('.search-form__submit-button'),
-  gallery: document.querySelector('.gallery'),
-};
-
-refs.searchForm.addEventListener('submit', e => {
-  e.preventDefault();
-  fetchPhotos(refs.input.value);
-});
-
-refs.input.addEventListener('input', onInput);
-
-function onInput(e) {
-  let inputValue = e.target.value.trim();
-
-  if (inputValue === '') {
-    return;
-  }
-
-  //   console.log(inputValue);
-  //     .then(renderCountryMarkup)
-  //     .catch(() => Notify.failure('Oops, there is no country with that name'));
-}
