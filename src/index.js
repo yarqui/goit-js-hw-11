@@ -11,8 +11,7 @@ const refs = {
 };
 
 const lightbox = new SimpleLightbox('.photo-link', {
-  // captionsData: 'alt',
-  captionDelay: 250,
+  // closeText: 'close',
 });
 
 refs.searchForm.addEventListener('submit', onSubmit);
