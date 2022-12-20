@@ -51,7 +51,7 @@ function renderGalleryMarkup(pictures) {
 
     const markup = `<div class="photo-card">
     <a class="photo-link" href="${largeImageURL}">
-      <img src="${webformatURL}" alt="${tags}" loading="lazy" />
+      <img src="${webformatURL}" alt="${tags}" loading="lazy" width="305px" height="200px"/>
     </a>
     <div class="info">
       <p class="info-item">

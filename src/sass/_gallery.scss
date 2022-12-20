@@ -36,6 +36,7 @@ img {
 .gallery {
   margin-top: 10px;
   display: flex;
+  justify-content: center;
   flex-direction: row;
   flex-wrap: wrap;
   margin-top: 10px;
@@ -50,11 +51,7 @@ img {
 
 .photo-link {
   display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 70%;
-
-  object-fit: fill;
+  // flex-direction: column;
 }
 
 .info {
@@ -65,5 +62,6 @@ img {
 }
 
 .info-item {
+  font-size: small;
   text-align: center;
 }
