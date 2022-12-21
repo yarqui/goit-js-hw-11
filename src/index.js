@@ -8,6 +8,7 @@ const refs = {
   input: document.querySelector('.search-form__input'),
   submitBtn: document.querySelector('.search-form__submit-button'),
   gallery: document.querySelector('.gallery'),
+  loadMoreBtn: document.querySelector('.load-more'),
 };
 
 const lightbox = new SimpleLightbox('.photo-link', {
@@ -15,11 +16,14 @@ const lightbox = new SimpleLightbox('.photo-link', {
 });
 
 refs.searchForm.addEventListener('submit', onSubmit);
+refs.loadMoreBtn.addEventListener('click', onLoadMore);
+
+function onLoadMore() {}
 
 function onSubmit(e) {
   e.preventDefault();
 
-  const inputValue = refs.input.value.trim();
+  let inputValue = refs.input.value.trim();
 
   refs.input.value = inputValue;
   refs.input.blur();
@@ -30,14 +34,13 @@ function onSubmit(e) {
 
   fetchPhotos(inputValue)
     .then(picArray => {
-      refs.gallery.innerHTML = '';
-
       renderGalleryMarkup(picArray);
     })
     .catch(error => error.message);
 }
 
 function renderGalleryMarkup(pictures) {
+  refs.gallery.innerHTML = '';
   pictures.map(picture => {
     const {
       webformatURL,

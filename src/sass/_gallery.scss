@@ -1,8 +1,3 @@
-body {
-  //   display: flex;
-  //   justify-content: center;
-}
-
 img {
 }
 
@@ -22,7 +17,8 @@ img {
   border: 1px solid grey;
 }
 
-.search-form__submit-button {
+.search-form__submit-button,
+.load-more {
   padding: 5px;
   border: 1px solid grey;
 
@@ -31,6 +27,11 @@ img {
     cursor: pointer;
     background-color: rgb(148, 246, 214);
   }
+}
+
+.load-more {
+  display: block;
+  margin: 0 auto;
 }
 
 .gallery {
@@ -51,7 +52,6 @@ img {
 
 .photo-link {
   display: flex;
-  // flex-direction: column;
 }
 
 .info {
