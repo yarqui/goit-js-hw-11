@@ -1,7 +1,8 @@
 import { Notify } from 'notiflix';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
-import { fetchPhotos } from './fetchPhotos.js';
+// import { fetchPhotos } from './js/fetchPhotos';
+import PixabayAPI from './js/fetchPhotos';
 
 const refs = {
   searchForm: document.getElementById('search-form'),
@@ -11,36 +12,43 @@ const refs = {
   loadMoreBtn: document.querySelector('.load-more'),
 };
 
-const lightbox = new SimpleLightbox('.photo-link', {
-  // closeText: 'close',
-});
+const lightbox = new SimpleLightbox('.photo-link');
+const pixabayAPI = new PixabayAPI();
 
-refs.searchForm.addEventListener('submit', onSubmit);
-refs.loadMoreBtn.addEventListener('click', onLoadMore);
+refs.searchForm.addEventListener('submit', submitQuery);
+// refs.loadMoreBtn.addEventListener('click', onLoadMore);
 
-function onLoadMore() {}
-
-function onSubmit(e) {
+function submitQuery(e) {
   e.preventDefault();
 
   let inputValue = refs.input.value.trim();
-
-  refs.input.value = inputValue;
-  refs.input.blur();
 
   if (!inputValue) {
     return;
   }
 
-  fetchPhotos(inputValue)
+  refs.input.value = inputValue;
+  refs.input.blur();
+
+  pixabayAPI.setQuery(inputValue);
+
+  pixabayAPI
+    .fetchPhotos()
     .then(picArray => {
-      renderGalleryMarkup(picArray);
+      if (picArray.length === 0) {
+        Notify.failure(
+          'Sorry, there are no images matching your search query. Please try again.'
+        );
+      }
+
+      renderFirstGallery(picArray);
     })
     .catch(error => error.message);
 }
 
-function renderGalleryMarkup(pictures) {
+function renderFirstGallery(pictures) {
   refs.gallery.innerHTML = '';
+
   pictures.map(picture => {
     const {
       webformatURL,
@@ -78,6 +86,6 @@ function renderGalleryMarkup(pictures) {
 
     refs.gallery.insertAdjacentHTML('beforeend', markup);
   });
-
-  lightbox.refresh();
 }
+
+//   lightbox.refresh();
