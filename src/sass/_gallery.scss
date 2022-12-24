@@ -13,25 +13,32 @@ img {
 }
 
 .search-form__input {
-  padding: 5px;
+  padding: 10px;
   border: 1px solid grey;
+}
+
+.search-form__input,
+.search-form__submit-button,
+.load-more {
+  border-radius: 10px;
 }
 
 .search-form__submit-button,
 .load-more {
-  padding: 5px;
+  padding: 10px;
   border: 1px solid grey;
 
   background-color: rgb(187, 251, 230);
-  &:hover {
+  &:hover,
+  &:focus {
     cursor: pointer;
-    background-color: rgb(148, 246, 214);
+    background-color: rgb(123, 235, 198);
   }
 }
 
 .load-more {
   display: block;
-  margin: 0 auto;
+  margin: 10 auto;
 }
 
 .gallery {
@@ -64,4 +71,18 @@ img {
 .info-item {
   font-size: small;
   text-align: center;
+}
+
+.visually-hidden {
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  padding: 0;
+  clip: rect(0 0 0 0);
+  -webkit-clip-path: inset(50%);
+  clip-path: inset(50%);
+  margin: -1px;
+  border: 0;
 }

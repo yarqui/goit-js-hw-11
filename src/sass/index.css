@@ -1,6 +1,7 @@
 @import '~node_modules/modern-normalize/modern-normalize.css';
 .example {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   line-height: 1.5;
   background-color: #fff;
   color: #2f2f37;
@@ -20,7 +21,7 @@
 
 .example .background {
   height: 240px;
-  background-image: url("../images/logo.png");
+  background-image: url('../images/logo.png');
   background-size: cover;
   background-position: center;
 }
@@ -65,7 +66,8 @@
 
 .photo-card {
   width: 20%;
-  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.11), 0px 2px 2px rgba(0, 0, 0, 0.06), 1px 2px 3px rgba(0, 0, 0, 0.11);
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.11), 0px 2px 2px rgba(0, 0, 0, 0.06),
+    1px 2px 3px rgba(0, 0, 0, 0.11);
 }
 
 .photo-link {
@@ -82,4 +84,18 @@
 .info-item {
   font-size: small;
   text-align: center;
-}/*# sourceMappingURL=index.css.map */
+}
+
+.visually-hidden {
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  padding: 0;
+  clip: rect(0 0 0 0);
+  -webkit-clip-path: inset(50%);
+  clip-path: inset(50%);
+  margin: -1px;
+  border: 0;
+} /*# sourceMappingURL=index.css.map */

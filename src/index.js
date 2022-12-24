@@ -1,7 +1,6 @@
 import { Notify } from 'notiflix';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
-// import { fetchPhotos } from './js/fetchPhotos';
 import PixabayAPI from './js/fetchPhotos';
 
 const refs = {
@@ -16,14 +15,14 @@ const lightbox = new SimpleLightbox('.photo-link');
 const pixabayAPI = new PixabayAPI();
 
 refs.searchForm.addEventListener('submit', submitQuery);
-// refs.loadMoreBtn.addEventListener('click', onLoadMore);
+refs.loadMoreBtn.addEventListener('click', onLoadMore);
 
 function submitQuery(e) {
   e.preventDefault();
 
   let inputValue = refs.input.value.trim();
 
-  if (!inputValue) {
+  if (!inputValue || inputValue === pixabayAPI.getQuery()) {
     return;
   }
 
@@ -31,6 +30,7 @@ function submitQuery(e) {
   refs.input.blur();
 
   pixabayAPI.setQuery(inputValue);
+  pixabayAPI.resetPageNumber();
 
   pixabayAPI
     .fetchPhotos()
@@ -48,6 +48,14 @@ function submitQuery(e) {
 
 function renderFirstGallery(pictures) {
   refs.gallery.innerHTML = '';
+
+  renderMarkup(pictures);
+
+  lightbox.refresh();
+}
+
+function renderMarkup(pictures) {
+  hideLoadMoreBtn();
 
   pictures.map(picture => {
     const {
@@ -85,7 +93,25 @@ function renderFirstGallery(pictures) {
   </div>`;
 
     refs.gallery.insertAdjacentHTML('beforeend', markup);
+
+    showLoadMoreBtn();
   });
 }
 
-//   lightbox.refresh();
+function onLoadMore() {
+  pixabayAPI.incrementPageNumber();
+
+  pixabayAPI.fetchPhotos().then(picArray => {
+    renderMarkup(picArray);
+
+    lightbox.refresh();
+  });
+}
+
+function hideLoadMoreBtn() {
+  refs.loadMoreBtn.classList.add('visually-hidden');
+}
+
+function showLoadMoreBtn() {
+  refs.loadMoreBtn.classList.remove('visually-hidden');
+}
