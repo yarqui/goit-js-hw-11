@@ -14,7 +14,7 @@ export default class PixabayAPI {
     const url = `${this.baseURL}&key=${this.API_KEY}&q=${this.query}&per_page=${this.perPage}&page=${this.pageNumber}`;
     const res = await axios.get(url);
 
-    return res.data.hits;
+    return res.data;
   }
 
   setQuery(searchQuery) {
