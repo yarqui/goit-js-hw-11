@@ -128,7 +128,7 @@ function loadMorePics() {
 
     renderMarkup(hits);
 
-    scrollToFetchRes();
+    scrollToNextResult();
   });
 }
 
@@ -147,7 +147,7 @@ function scrollToTop() {
   });
 }
 
-function scrollToFetchRes() {
+function scrollToNextResult() {
   const { height: cardHeight } = document
     .querySelector('.gallery')
     .firstElementChild.getBoundingClientRect();

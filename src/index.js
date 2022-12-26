@@ -1,2 +1,2 @@
-import './js/gallery_with_button';
-import './js/gallery_infinite-scroll';
+// import './js/gallery_with_button';
+// import './js/gallery_infinite-scroll';
