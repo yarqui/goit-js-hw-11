@@ -127,6 +127,8 @@ function loadMorePics() {
     contentPagesLeft -= 1;
 
     renderMarkup(hits);
+
+    scrollToFetchRes();
   });
 }
 
@@ -141,6 +143,17 @@ function showBtn(el) {
 function scrollToTop() {
   window.scrollTo({
     top: 0,
+    behavior: 'smooth',
+  });
+}
+
+function scrollToFetchRes() {
+  const { height: cardHeight } = document
+    .querySelector('.gallery')
+    .firstElementChild.getBoundingClientRect();
+
+  window.scrollBy({
+    top: cardHeight * 2.2,
     behavior: 'smooth',
   });
 }
