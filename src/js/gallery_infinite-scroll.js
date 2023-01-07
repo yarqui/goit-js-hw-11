@@ -2,6 +2,7 @@ import { Notify } from 'notiflix';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import PixabayAPI from './fetchPhotos';
+import throttle from 'lodash.throttle';
 
 const refs = {
   searchForm: document.getElementById('search-form'),
@@ -13,11 +14,13 @@ const refs = {
 
 const lightbox = new SimpleLightbox('.photo-link');
 const pixabayAPI = new PixabayAPI();
+const throttledScroll = throttle(loadMorePics, 500);
 let contentPagesLeft = 0;
 
 /** Listeners*/
 refs.searchForm.addEventListener('submit', submitQuery);
 refs.toTopBtn.addEventListener('click', scrollToTop);
+window.addEventListener('scroll', throttledScroll);
 
 /** Functions */
 function submitQuery(e) {
@@ -110,21 +113,34 @@ function renderMarkup(pictures) {
 }
 
 function loadMorePics() {
-  pixabayAPI.incrementPageNumber();
+  const body = document.body;
+  const html = document.documentElement;
+  const totalHeight = Math.max(
+    body.scrollHeight,
+    body.offsetHeight,
+    html.clientHeight,
+    html.scrollHeight,
+    html.offsetHeight
+  );
 
-  pixabayAPI.fetchPhotos().then(({ hits }) => {
-    if (contentPagesLeft <= 0) {
-      Notify.info("We're sorry, but you've reached the end of search results.");
-    }
+  const pixelsToBottom = totalHeight - window.innerHeight - window.scrollY;
 
-    contentPagesLeft -= 1;
+  if (pixelsToBottom < 300 && contentPagesLeft >= 0) {
+    pixabayAPI.incrementPageNumber();
 
-    renderMarkup(hits);
-  });
-}
+    pixabayAPI.fetchPhotos().then(({ hits }) => {
+      if (contentPagesLeft <= 0) {
+        Notify.info(
+          "We're sorry, but you've reached the end of search results."
+        );
+      }
 
-function hideBtn(el) {
-  return el.classList.add('visually-hidden');
+      contentPagesLeft -= 1;
+      console.log('contentPagesLeft after:', contentPagesLeft);
+
+      renderMarkup(hits);
+    });
+  }
 }
 
 function showBtn(el) {
