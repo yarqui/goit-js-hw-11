@@ -8,7 +8,6 @@ const refs = {
   input: document.querySelector('.search-form__input'),
   submitBtn: document.querySelector('.search-form__submit-button'),
   gallery: document.querySelector('.gallery'),
-  loadMoreBtn: document.querySelector('.load-more'),
   toTopBtn: document.querySelector('.scroll-top-button'),
 };
 
@@ -16,10 +15,11 @@ const lightbox = new SimpleLightbox('.photo-link');
 const pixabayAPI = new PixabayAPI();
 let contentPagesLeft = 0;
 
+/** Listeners*/
 refs.searchForm.addEventListener('submit', submitQuery);
-refs.loadMoreBtn.addEventListener('click', loadMorePics);
 refs.toTopBtn.addEventListener('click', scrollToTop);
 
+/** Functions */
 function submitQuery(e) {
   e.preventDefault();
 
@@ -34,7 +34,7 @@ function submitQuery(e) {
   /**just for a cleaner look of input field after sanitizing */
   refs.input.value = inputValue;
 
-  /**removes focus of the input field after submit */
+  /**removes focus from the input field after submit */
   refs.input.blur();
 
   pixabayAPI.setQuery(inputValue);
@@ -68,8 +68,6 @@ function loadFirstPics(pictures) {
 }
 
 function renderMarkup(pictures) {
-  hideBtn(refs.loadMoreBtn);
-
   pictures.map(picture => {
     const {
       webformatURL,
@@ -108,8 +106,6 @@ function renderMarkup(pictures) {
     refs.gallery.insertAdjacentHTML('beforeend', markup);
 
     lightbox.refresh();
-
-    showBtn(refs.loadMoreBtn);
   });
 }
 
@@ -118,10 +114,7 @@ function loadMorePics() {
 
   pixabayAPI.fetchPhotos().then(({ hits }) => {
     if (contentPagesLeft <= 0) {
-      Notify.info(
-        "We're sorry, but you've reached the end of search results.",
-        hideBtn(refs.loadMoreBtn)
-      );
+      Notify.info("We're sorry, but you've reached the end of search results.");
     }
 
     contentPagesLeft -= 1;
