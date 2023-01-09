@@ -83,7 +83,7 @@ function renderMarkup(pictures) {
 
     const markup = `<div class="photo-card">
     <a class="photo-link" href="${largeImageURL}">
-      <img src="${webformatURL}" alt="${tags}" loading="lazy" width="305px" height="200px"/>
+      <img class="photo-img" src="${webformatURL}" alt="${tags}" loading="lazy" width="305" height="200"/>
     </a>
     <div class="info">
       <p class="info-item">
